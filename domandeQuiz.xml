@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<questions name="domandeQuiz">
+    <question>
+        <body>
+            <questionTitle>Qual è la capitale d'Italia?</questionTitle>
+        </body>
+        <answers correctOne="1">
+            <answer id="1" type="text">Risposta A</answer>
+            <answer id="2" type="text">Risposta B</answer>
+            <answer id="3" type="text">Risposta C</answer>
+        </answers>
+    </question>
+</questions>

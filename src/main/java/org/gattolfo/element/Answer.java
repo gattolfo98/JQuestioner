@@ -1,4 +1,7 @@
 package org.gattolfo.element;
 
-public class Answer {
+public abstract class Answer {
+    public abstract String getId();
+    public abstract String getAnswer();
+    public abstract boolean isImage();
 }
