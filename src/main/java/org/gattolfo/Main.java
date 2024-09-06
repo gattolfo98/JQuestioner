@@ -26,13 +26,14 @@ import java.util.Map;
 
 public class Main extends Application {
     public static void main(String[] args) {
-
         launch(args);
     }
 
     private ScreenManager screenManager;
     @Override
     public void start(Stage stage) throws Exception {
+        stage.setWidth(900);
+        stage.setHeight(800);
         screenManager = new ScreenManager(stage);
         screenManager.start();
     }
@@ -57,10 +58,6 @@ public class Main extends Application {
             return answer;
         }
 
-        @Override
-        public boolean isImage() {
-            return false;
-        }
     }
 
     // Metodo per testare QuestionSaver

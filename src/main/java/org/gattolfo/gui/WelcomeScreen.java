@@ -27,7 +27,7 @@ public class WelcomeScreen extends  Screen {
 
     @Override
     public void initView() {
-        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
         Button btn = new Button();
         btn.setText("Load Questions");
         Button btnbuilder = new Button();

@@ -13,8 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import org.gattolfo.element.Answer;
 import org.gattolfo.element.OpenQuestion;
 import org.gattolfo.element.Question;
+import org.gattolfo.element.TrueFalseQuestion;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,20 +163,28 @@ public class QuestionEditorScreen extends Screen{
         return root;
     }
 
+    VBox questionShowRoot;
     private Parent buildQuestionListPart(){
-        VBox root = new VBox();
+        questionShowRoot = new VBox();
 
+        showQuestion();
+
+        return questionShowRoot;
+    }
+
+    private void showQuestion(){
+        questionShowRoot.getChildren().clear();
         VBox questionBox;
         for(Question question : questionList){
             questionBox = new VBox();
             Label titleQuestion = new Label(question.getText());
             questionBox.getChildren().add(titleQuestion);
-            root.getChildren().add(questionBox);
+            questionShowRoot.getChildren().add(questionBox);
         }
-        return root;
     }
 
-    ModalPane newQuestionBox = null;
+    private ModalPane newQuestionBox = null;
+    private Q_TYPE newQuestionType;
     private Parent buildModalPane(){
         Dialog dialog = new Dialog(450,450);
 
@@ -209,6 +219,7 @@ public class QuestionEditorScreen extends Screen{
         Parent openItemView = buildOpenNewQuestionBox();
         openItem.setOnAction(e ->{
             System.out.println("open");
+            newQuestionType = Q_TYPE.OPEN;
             addButton.setText("Open");
             openedTypeView.getChildren().clear();
             openedTypeView.getChildren().add(openItemView);
@@ -219,14 +230,19 @@ public class QuestionEditorScreen extends Screen{
         tfItem.setOnAction(e->{
             System.out.println("True or False");
             addButton.setText("True or False");
+            newQuestionType = Q_TYPE.TF;
             openedTypeView.getChildren().clear();
             openedTypeView.getChildren().add(tfQuestionBox);
         });
         addButton.getItems().add(tfItem);
         var multipleItem = new MenuItem("Multiple");
+        Parent mQuestionBox = buildMultipleQuestionBox();
         multipleItem.setOnAction(e->{
             System.out.println("Multiple");
+            newQuestionType = Q_TYPE.TF;
             addButton.setText("Multiple");
+            openedTypeView.getChildren().clear();
+            openedTypeView.getChildren().add(mQuestionBox);
         });
         addButton.getItems().add(multipleItem);
         insideBox.getChildren().add(openedTypeView);
@@ -238,15 +254,26 @@ public class QuestionEditorScreen extends Screen{
         Button insertButton = new Button();
         insertButton.setText("confirm");
         insertButton.setOnAction(e->{
-            if(openedTypeView == openItemView){
+            if(newQuestionType == null){
+                return;
+            }
+            if(newQuestionType == Q_TYPE.OPEN){
                 if(!openQuestionCorrectOne.getText().isBlank()){
-
-                    Question newQuestion = new OpenQuestion(questionTitleField.getText(), new ArrayList<>(),new HashMap<>(),openQuestionCorrectOne.getText());e
+                    Question newQuestion = new OpenQuestion(questionTitleField.getText(), new ArrayList<>(),new HashMap<>(),openQuestionCorrectOne.getText());
+                    questionList.add(newQuestion);
+                    newQuestionBox.hide();
+                    showQuestion();
                 }
-            }else if(openedTypeView == tfQuestionBox){
+            }else if(newQuestionType == Q_TYPE.TF){
                 if(toggleGroup.getSelectedToggle() != null){
-                    //TODO: aggiungi la questione
+                    Boolean b = (Boolean) toggleGroup.getSelectedToggle().getUserData();
+                    Question newQuestion = new TrueFalseQuestion(questionTitleField.getText(),b);
+                    questionList.add(newQuestion);
+                    newQuestionBox.hide();
+                    showQuestion();
                 }
+            }else if(newQuestionType == Q_TYPE.MULTIPLE){
+                //TODO: gestisci domanda multipla
             }
         });
         insertButtonBox.getChildren().add(insertButton);
@@ -289,8 +316,10 @@ public class QuestionEditorScreen extends Screen{
         VBox selecterBox = new VBox();
         root.getChildren().add(selecterBox);
         RadioButton trueButton = new RadioButton("True");
+        trueButton.setUserData(Boolean.TRUE);
         selecterBox.getChildren().add(trueButton);
         RadioButton falseButton = new RadioButton("False");
+        falseButton.setUserData(Boolean.FALSE);
         selecterBox.getChildren().add(falseButton);
         toggleGroup = new ToggleGroup();
 
@@ -299,6 +328,18 @@ public class QuestionEditorScreen extends Screen{
         return root;
     }
 
+    //TODO: finisci questo
+    private Parent buildMultipleQuestionBox(){
+        VBox root = new VBox();
+        return root;
+    }
+
+
+    private enum Q_TYPE{
+        TF,
+        MULTIPLE,
+        OPEN
+    }
 
 
     @Override

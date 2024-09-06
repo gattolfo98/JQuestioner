@@ -10,16 +10,7 @@ public class MultipleChoiceQuestion extends Question{
 
 
     public MultipleChoiceQuestion(String text, Map<String, Answer> answerMap, Answer correct) {
-        super(text, new ArrayList<>(),answerMap, correct.getId());
-
-    }
-    public MultipleChoiceQuestion(ArrayList<String> images, Map<String, Answer> answerMap,Answer correct) {
-        super("", images, answerMap, correct.getId());
-
-    }
-
-    public MultipleChoiceQuestion(String text, ArrayList<String> images, Map<String, Answer> answerMap, Answer correct) {
-        super(text, images, answerMap, correct.getId());
+        super(text,answerMap, correct.getId());
     }
 
     @Override

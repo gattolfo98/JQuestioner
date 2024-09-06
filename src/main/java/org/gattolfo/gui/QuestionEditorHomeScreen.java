@@ -27,7 +27,6 @@ public class QuestionEditorHomeScreen extends Screen{
 
     @Override
     public void initView() {
-        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
         root = new VBox();
         root.setAlignment(Pos.TOP_LEFT);
         root.setSpacing(10);

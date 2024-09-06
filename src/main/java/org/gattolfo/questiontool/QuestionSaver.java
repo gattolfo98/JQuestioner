@@ -22,7 +22,7 @@ public class QuestionSaver {
     public QuestionSaver(List<Question> questions) {
         this.questions = questions;
     }
-
+    //TODO: riscrivilo
     public boolean buildDocument(String questionName, String username) {
         if(questions == null || questions.isEmpty()) return false;
         LocalDateTime currentDateTime = LocalDateTime.now();
@@ -59,7 +59,7 @@ public class QuestionSaver {
         }
         return true;
     }
-
+    //TODO: riscrivilo
     private void addQuestionBody(Document document,Question question,Element questionElement) {
         Element questionBody = document.createElement("body");
         questionElement.appendChild(questionBody);
@@ -68,20 +68,26 @@ public class QuestionSaver {
             textElement.appendChild(document.createTextNode(question.getText()));
             questionBody.appendChild(textElement);
         }
+        /*
         for(String imgPath : question.getImages()){
             Element imageElement = document.createElement("questionImage");
             imageElement.appendChild(document.createTextNode(imgPath));
             questionBody.appendChild(imageElement);
         }
-    }
 
+         */
+    }
+    //TODO: riscrivilo
     private void addAnswers(Document document, Map<String,Answer> answers, Element answersElement) {
-        for(Map.Entry<String,Answer> entry : answers.entrySet()){
+        /*
+                for(Map.Entry<String,Answer> entry : answers.entrySet()){
             Element answerElement = document.createElement("answer");
             answerElement.setAttribute("type", (entry.getValue().isImage())? "image":"text");
             answerElement.setAttribute("id", entry.getKey());
             answerElement.appendChild(document.createTextNode(entry.getValue().getAnswer()));
             answersElement.appendChild(answerElement);
         }
+         */
+
     }
 }

@@ -1,13 +1,36 @@
 package org.gattolfo.element;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class TrueFalseQuestion extends Question{
 
 
-    public TrueFalseQuestion(String text, ArrayList<String> images, Map<String, Answer> answerMap, Boolean idCorrect) {
-        super(text, images, answerMap, idCorrect.toString());
+    public TrueFalseQuestion(String text, Boolean idCorrect) {
+        super(text, new HashMap<>(), idCorrect.toString());
+        getAnswerMap().put(Boolean.TRUE.toString(), new Answer() {
+            @Override
+            public String getId() {
+                return Boolean.TRUE.toString();
+            }
+
+            @Override
+            public String getAnswer() {
+                return "True";
+            }
+        });
+        getAnswerMap().put(Boolean.FALSE.toString(), new Answer() {
+            @Override
+            public String getId() {
+                return Boolean.FALSE.toString();
+            }
+
+            @Override
+            public String getAnswer() {
+                return "False";
+            }
+        });
     }
 
     @Override
